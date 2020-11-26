@@ -1,0 +1,123 @@
+<div id="colorlib-page">
+	<a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+	<aside id="colorlib-aside" role="complementary" class="js-fullheight">
+		<nav id="colorlib-main-menu" role="navigation">
+			<ul>
+				<li>Welcome, <b><span><%= name %></span></b></li>
+				<li class="colorlib-active"><a href="/">Home</a></li>
+				<li><a href="/bids">Bids</a></li>
+				<li><a href="/logout">Log out</a></li>
+			</ul>
+		</nav>
+
+		<div class="colorlib-footer">
+			<h1 id="colorlib-logo" class="mb-4"><a href="/" style="background-color: #004D40;">Tenders
+					<span>List</span></a></h1>
+
+		</div>
+	</aside>
+	<div id="colorlib-main">
+		<section class="ftco-section ftco-no-pt ftco-no-pb">
+			<div class="container">
+				<div class="row d-flex">
+					<div class="col-lg-8 px-md-5 py-5">
+						<br>
+						<u>
+							<b>
+								<h5><%= tender.title%></h5>
+							</b>
+						</u>
+						<div class="card card-body" border-success>
+							<div>
+
+								<div>
+									<p>
+										<i class="icon-calendar mr-2"></i>Closes in: <b><span id="demo"></span></b>
+
+									</p>
+									<i class="icon-user mr-2"></i>Issuer: <b><span><%= tender.manager %></span></b>
+									<br>
+									<br>
+									<b>Description:</b>
+									<p><%= tender.description %></p>
+
+								</div>
+
+							</div><!-- END-->
+
+						</div>
+						<p>
+						<div class="card card-body" border-success>
+							<b>Place Bid:</b>
+							<hr>
+							<%- include ("./partials/messages") %>
+							<form action="/make-bid" method="POST">
+								<div class="form-group">
+									<div class="col-xl-12">
+										<div class="submit-field">
+											<b>Description</b>
+											<textarea class="form-control" id="description" name="description" rows="10"
+												placeholder="Enter description..."></textarea>
+										</div>
+									</div>
+								</div>
+								<input type="hidden" value="<%= tender._id %>" name="tenderId">
+								<input type="hidden" value="<%= tender.tenderNumber %>" name="tenderNumber">
+								<input type="hidden" value="<%= tender.title %>" name="tenderTitle">
+								<input type="hidden" value="<%= tender.closingTime %>" name="tenderClosingTime">
+								<input type="hidden" value="<%= tender.managerId %>" name="managerId">
+								<input type="hidden" value="<%= tender.manager %>" name="manager">
+								<button type="submit" class="btn btn-success btn-block">Make Bid</button>
+							</form>
+						</div>
+					</div>
+					</p>
+					<div class="col-xl-4 sidebar ftco-animate bg-light pt-5">
+						<!-- <div class="sidebar-box pt-md-4">
+							<form action="#" class="search-form">
+								<div class="form-group">
+									<span class="icon icon-search"></span>
+									<input type="text" class="form-control" placeholder="Type a keyword and hit enter">
+								</div>
+							</form>
+						</div> -->
+					</div>
+				</div>
+		</section>
+	</div>
+</div>
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+		<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+		<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+			stroke="#F96D00" /></svg></div>
+<script>
+	var countDownDate = new Date("<%= closingTime %>").getTime();
+
+	// Update the count down every 1 second
+	var x = setInterval(function () {
+
+		// Get today's date and time
+		var now = new Date().getTime();
+
+		// Find the distance between now and the count down date
+		var distance = countDownDate - now;
+
+		// Time calculations for days, hours, minutes and seconds
+		var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+		var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+		// Display the result in the element with id="demo"
+		document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+			+ minutes + "m " + seconds + "s ";
+
+		// If the count down is finished, write some text
+		if (distance < 0) {
+			clearInterval(x);
+			document.getElementById("demo").innerHTML = "EXPIRED";
+		}
+	}, 1000);
+</script>

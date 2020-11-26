@@ -1,0 +1,108 @@
+<div id="colorlib-page">
+	<a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+	<aside id="colorlib-aside" role="complementary" class="js-fullheight">
+		<nav id="colorlib-main-menu" role="navigation">
+			<ul>
+				<li>Welcome, <b><span><%= name %></span></b></li>
+				<li class="colorlib-active"><a href="/">Home</a></li>
+				<li><a href="/bids">Bids</a></li>
+				<li><a href="/logout">Log out</a></li>
+			</ul>
+		</nav>
+		<div class="colorlib-footer">
+			<h2 id="colorlib-logo" class="mb-4"><a href="/" style="background-color: #004D40;">Tenders
+					<span>List</span></a></h2>
+
+		</div>
+	</aside>
+	<div id="colorlib-main">
+		<section class="ftco-section ftco-no-pt ftco-no-pb">
+			<div class="container">
+				<div class="row d-flex">
+					<div class="col-xl-8 py-5 px-md-5">
+						<div class="card card-body" border-success>
+							<%- include ("./partials/messages") %>
+
+
+							<div class="row pt-md-4">
+
+
+								<% if (tenders.length > 0) { %>
+								<% for (let tender of tenders) { %>
+								<div class="col-md-12">
+									<div class="blog-entry ftco-animate d-md-flex">
+										<!-- <a href="/tender/<%= tender.id %>" class="img img-2"
+
+											style="background-image: url(images/image_1.jpg);"></a> -->
+										<img class="img img-2" src="<%= tender.tendercover %>" alt="<%= tender.title %>"
+											class="img-responsive">
+										<div class="text text-2 pl-md-4">
+											<h3 class="mb-2"><a href="/tender/<%= tender.id %>"><%= tender.title%></a>
+											</h3>
+											<%
+                                                var monthNames = [
+                                                "January", "February", "March",
+                                                "April", "May", "June", "July",
+                                                "August", "September", "October",
+                                                "November", "December"
+                                                ];
+                                                var d = tender.closingTime.getDate();
+                                                var m = monthNames[tender.closingTime.getMonth()];
+                                                var y = tender.closingTime.getFullYear();
+                                        %>
+											<div class="meta-wrap">
+												<span><i class="icon-calendar mr-2"></i>Closes at:
+													<%= d+ ` ` +m+ ` ` +y %></span>
+												<br>
+												<span><i class="icon-user mr-2"> <%= tender.manager %></i></span>
+											</div>
+											<br>
+											<p class="mb-4"><%= tender.description %></p>
+											<p><a href="/tender/<%= tender.id %>" class="btn-custom">Read More <span
+														class="ion-ios-arrow-forward"></span></a></p>
+
+										</div>
+									</div>
+									<hr>
+								</div>
+								<% } %>
+								<% } else { %>
+								<h1>Sorry, no Tenders found for now!</h1>
+								<% } %>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<div class="block-27">
+									<ul>
+										<%- include('./includes/pagination.ejs', {currentPage: currentPage, nextPage: nextPage, previousPage: previousPage, lastPage: lastPage, hasNextPage: hasNextPage, hasPreviousPage: hasPreviousPage}) %>
+
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-4 sidebar ftco-animate bg-light pt-5">
+						<!-- <div class="sidebar-box pt-md-4">
+							<form action="#" class="search-form">
+								<div class="form-group">
+									<span class="icon icon-search"></span>
+									<input type="text" class="form-control" placeholder="Type a keyword and hit enter">
+								</div>
+							</form>
+						</div> -->
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen">
+	<svg class="circular" width="48px" height="48px">
+		<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+		<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+			stroke="#F96D00" />
+	</svg>
+</div>
